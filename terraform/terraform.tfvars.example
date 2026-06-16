@@ -1,0 +1,28 @@
+# Copy this file to terraform.tfvars and fill in the values.
+# terraform.tfvars is gitignored — never commit it.
+
+aws_region  = "us-east-1"
+environment = "prod"
+
+# ── RDS ───────────────────────────────────────────────────────────────────────
+# Leave create_rds = true to provision a new VPC + RDS instance.
+# Set to false and fill in the existing_* variables to reuse an existing DB.
+create_rds = true
+
+db_instance_class    = "db.t3.micro"
+db_engine_version    = "16.4"
+db_allocated_storage = 20
+db_name              = "appdb"
+db_username          = "app_user"
+
+# ── Existing RDS (only needed when create_rds = false) ───────────────────────
+# existing_db_host     = "your-db.xxxx.us-east-1.rds.amazonaws.com"
+# existing_db_port     = 5432
+# existing_db_name     = "appdb"
+# existing_db_username = "app_user"
+# existing_db_password = "your-current-password"
+# existing_lambda_subnet_ids         = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"]
+# existing_lambda_security_group_ids = ["sg-xxxxxxxx"]
+
+# No Lambda layer needed — psycopg2-binary is bundled directly into the
+# deployment zip by the null_resource build step in rotation.tf.
