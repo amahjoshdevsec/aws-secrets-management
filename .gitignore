@@ -1,0 +1,13 @@
+*.tfstate
+*.tfstate.backup
+.terraform/
+.env
+*.pem
+*.key
+secrets.auto.tfvars
+terraform.tfvars
+.DS_Store
+terraform/rotation-lambda.zip
+terraform/lambda_package/
+tfplan
+*.tfplan

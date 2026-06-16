@@ -1,28 +1,33 @@
-# Copy this file to terraform.tfvars and fill in the values.
+# Copy this file to terraform.tfvars and fill in YOUR values.
 # terraform.tfvars is gitignored — never commit it.
 
-aws_region  = "us-east-1"
+# ── CHANGE: Your AWS region ───────────────────────────────────────────────────
+aws_region = "us-east-1"
+
+# ── CHANGE: environment prefix used in all resource names/tags ────────────────
 environment = "prod"
 
 # ── RDS ───────────────────────────────────────────────────────────────────────
-# Leave create_rds = true to provision a new VPC + RDS instance.
-# Set to false and fill in the existing_* variables to reuse an existing DB.
+# true  → Terraform provisions a new VPC + private RDS instance for you
+# false → Fill in the existing_* variables below to reuse an existing DB
 create_rds = true
 
-db_instance_class    = "db.t3.micro"
-db_engine_version    = "16.4"
-db_allocated_storage = 20
-db_name              = "appdb"
-db_username          = "app_user"
+# These have sensible defaults — change only if you have specific requirements
+db_instance_class    = "db.t3.micro"    # CHANGE if you need a larger instance
+db_engine_version    = "16.4"           # CHANGE to match your target Postgres version
+db_allocated_storage = 20               # CHANGE: size in GB
+db_name              = "appdb"          # CHANGE: your database name
+db_username          = "app_user"       # CHANGE: your database master username
 
 # ── Existing RDS (only needed when create_rds = false) ───────────────────────
-# existing_db_host     = "your-db.xxxx.us-east-1.rds.amazonaws.com"
+# existing_db_host     = "your-db.xxxx.us-east-1.rds.amazonaws.com"  # CHANGE
 # existing_db_port     = 5432
-# existing_db_name     = "appdb"
-# existing_db_username = "app_user"
-# existing_db_password = "your-current-password"
-# existing_lambda_subnet_ids         = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"]
-# existing_lambda_security_group_ids = ["sg-xxxxxxxx"]
+# existing_db_name     = "appdb"                                       # CHANGE
+# existing_db_username = "app_user"                                    # CHANGE
+# existing_db_password = "your-current-password"                       # CHANGE
+# existing_lambda_subnet_ids         = ["subnet-xxxxxxxx"]             # CHANGE
+# existing_lambda_security_group_ids = ["sg-xxxxxxxx"]                 # CHANGE
 
-# No Lambda layer needed — psycopg2-binary is bundled directly into the
-# deployment zip by the null_resource build step in rotation.tf.
+# ── No layer needed ───────────────────────────────────────────────────────────
+# psycopg2-binary is bundled directly into the Lambda zip by the
+# null_resource build step in rotation.tf — no layer ARN required.
